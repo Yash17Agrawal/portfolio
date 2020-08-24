@@ -3,10 +3,12 @@ import ReactDOM from 'react-dom';
 import './index.css';
 import * as serviceWorker from './serviceWorker';
 import Dashboard from './components/Dashboard';
+import StickyFooter from './components/StickyFooter/StickyFooter';
 
 ReactDOM.render(
   <React.StrictMode>
     <Dashboard />
+    <StickyFooter></StickyFooter>
   </React.StrictMode>,
   document.getElementById('root')
 );

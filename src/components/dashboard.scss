@@ -1,0 +1,25 @@
+.profile {
+  display: flex !important;
+  flex-direction: column;
+  align-content: center;
+  justify-content: center;
+  align-items: center;
+
+  img {
+    background-color: white;
+    border-radius: 160px;
+    display: flex;
+    justify-content: center;
+    align-self: center;
+    align-items: center;
+    object-fit: contain;
+    width: 15%;
+    .external {
+      display: flex;
+    }
+  }
+}
+
+.panel {
+  width: 100%;
+}

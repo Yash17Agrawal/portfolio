@@ -2,34 +2,64 @@ import React from 'react';
 import clsx from 'clsx';
 import { makeStyles } from '@material-ui/core/styles';
 import CssBaseline from '@material-ui/core/CssBaseline';
-import Drawer from '@material-ui/core/Drawer';
 import Box from '@material-ui/core/Box';
 import AppBar from '@material-ui/core/AppBar';
 import Toolbar from '@material-ui/core/Toolbar';
-import List from '@material-ui/core/List';
 import Typography from '@material-ui/core/Typography';
-import Divider from '@material-ui/core/Divider';
-import IconButton from '@material-ui/core/IconButton';
 import Container from '@material-ui/core/Container';
-import Grid from '@material-ui/core/Grid';
-import Paper from '@material-ui/core/Paper';
-import Link from '@material-ui/core/Link';
-import MenuIcon from '@material-ui/icons/Menu';
-import ChevronLeftIcon from '@material-ui/icons/ChevronLeft';
-import { mainListItems } from './ListItem';
-import Deposits from './Deposits';
 import { MEDIA_URLS } from '../constants/common';
+import Tabs from '@material-ui/core/Tabs';
+import Tab from '@material-ui/core/Tab';
+import './dashboard.scss';
+var profilePic = require('../assets/profilephoto.JPG');
 
-function Copyright() {
+interface TabPanelProps {
+  children?: React.ReactNode;
+  index: any;
+  value: any;
+}
+
+function TabPanel(props: TabPanelProps) {
+  const { children, value, index, ...other } = props;
+
   return (
-    <Typography variant="body2" color="textSecondary" align="center">
-      {'No © copyright issues'}
-      <Link color="inherit" href="https://material-ui.com/">
-        Your Website
-      </Link>{' '}
-      {new Date().getFullYear()}
-      {'.'}
-    </Typography>
+    <div
+      role="tabpanel"
+      className="panel"
+      hidden={value !== index}
+      id={`nav-tabpanel-${index}`}
+      aria-labelledby={`nav-tab-${index}`}
+      {...other}
+    >
+      {value === index && (
+        <Box p={3}>
+          <Typography>{children}</Typography>
+        </Box>
+      )}
+    </div>
+  );
+}
+
+function a11yProps(index: any) {
+  return {
+    id: `nav-tab-${index}`,
+    'aria-controls': `nav-tabpanel-${index}`,
+  };
+}
+interface LinkTabProps {
+  label?: string;
+  href?: string;
+}
+
+function LinkTab(props: LinkTabProps) {
+  return (
+    <Tab
+      component="a"
+      onClick={(event: React.MouseEvent<HTMLAnchorElement, MouseEvent>) => {
+        event.preventDefault();
+      }}
+      {...props}
+    />
   );
 }
 
@@ -73,32 +103,12 @@ const useStyles = makeStyles((theme) => ({
   title: {
     flexGrow: 1,
   },
-  drawerPaper: {
-    position: 'relative',
-    whiteSpace: 'nowrap',
-    width: drawerWidth,
-    transition: theme.transitions.create('width', {
-      easing: theme.transitions.easing.sharp,
-      duration: theme.transitions.duration.enteringScreen,
-    }),
-  },
-  drawerPaperClose: {
-    overflowX: 'hidden',
-    transition: theme.transitions.create('width', {
-      easing: theme.transitions.easing.sharp,
-      duration: theme.transitions.duration.leavingScreen,
-    }),
-    width: theme.spacing(7),
-    [theme.breakpoints.up('sm')]: {
-      width: theme.spacing(9),
-    },
-  },
   appBarSpacer: theme.mixins.toolbar,
-  content: {
-    flexGrow: 1,
-    height: '100vh',
-    overflow: 'auto',
-  },
+  // content: {
+  //   flexGrow: 1,
+  //   height: '100vh',
+  //   overflow: 'auto',
+  // },
   container: {
     paddingTop: theme.spacing(4),
     paddingBottom: theme.spacing(4),
@@ -116,97 +126,67 @@ const useStyles = makeStyles((theme) => ({
 
 export default function Dashboard() {
   const classes = useStyles();
-  const [open, setOpen] = React.useState(true);
-  const handleDrawerOpen = () => {
-    setOpen(true);
+  const [value, setValue] = React.useState(0);
+
+  const handleChange = (event: React.ChangeEvent<{}>, newValue: number) => {
+    setValue(newValue);
   };
-  const handleDrawerClose = () => {
-    setOpen(false);
-  };
-  const fixedHeightPaper = clsx(classes.paper, classes.fixedHeight);
 
   return (
     <div className={classes.root}>
       <CssBaseline />
-      <AppBar position="absolute" className={clsx(classes.appBar, open && classes.appBarShift)}>
+      <AppBar position="absolute" className={clsx(classes.appBar)}>
         <Toolbar className={classes.toolbar}>
-          <IconButton
-            edge="start"
-            color="inherit"
-            aria-label="open drawer"
-            onClick={handleDrawerOpen}
-            className={clsx(classes.menuButton, open && classes.menuButtonHidden)}
+          <Tabs
+            variant="fullWidth"
+            value={value}
+            onChange={handleChange}
+            aria-label="nav tabs example"
           >
-            <MenuIcon />
-          </IconButton>
-          <Typography component="h1" variant="h6" color="inherit" noWrap className={classes.title}>
-            Dashboard
-          </Typography>
+            <LinkTab label="Page One" href="/drafts" {...a11yProps(0)} />
+            <LinkTab label="Page Two" href="/trash" {...a11yProps(1)} />
+            <LinkTab label="Page Three" href="/spam" {...a11yProps(2)} />
+          </Tabs>
         </Toolbar>
       </AppBar>
-      <Drawer
-        variant="permanent"
-        classes={{
-          paper: clsx(classes.drawerPaper, !open && classes.drawerPaperClose),
-        }}
-        open={open}
-      >
-        <div className={classes.toolbarIcon}>
-          <IconButton onClick={handleDrawerClose}>
-            <ChevronLeftIcon />
-          </IconButton>
-        </div>
-        <Divider />
-        <List>{mainListItems}</List>
-        <Divider />
-      </Drawer>
-      <main className={classes.content}>
-        <div className={classes.appBarSpacer} />
-        <Container maxWidth="lg" className={classes.container}>
-          <ul>
-            <li>
-              <a href={MEDIA_URLS.TWITTER} aria-label="Twitter"   >
-                <i className="fab fa-twitter fa-2x" aria-hidden="true"></i>
-              </a>
-            </li>
-            <li>
-              <a href={MEDIA_URLS.GITHUB} aria-label="Github"   >
-                <i className="fab fa-github fa-2x" aria-hidden="true"></i>
-              </a>
-            </li>
-            <li>
-              <a href={MEDIA_URLS.LINKEDIN} aria-label="Linkedin"   >
-                <i className="fab fa-linkedin fa-2x" aria-hidden="true"></i>
-              </a>
-            </li>
+      <TabPanel value={value} index={0}>
+        <Container maxWidth="lg" className={`${classes.container} profile`}>
 
-            <li>
-              <a href={MEDIA_URLS.STACKOVERFLOW} aria-label="Stackoverflow"   >
-                <i className="fab fa-stack-overflow fa-2x" aria-hidden="true"></i>
-              </a>
-            </li>
+          <img src={profilePic}></img>
+          <div className="external">
+            <a href={MEDIA_URLS.TWITTER} aria-label="Twitter"   >
+              <i className="fab fa-twitter fa-2x" aria-hidden="true"></i>
+            </a>
 
-            <li>
-              <a href={MEDIA_URLS.MEDIUM} aria-label="Medium"   >
-                <i className="fab fa-medium fa-2x" aria-hidden="true"></i>
-              </a>
-            </li>
+            <a href={MEDIA_URLS.GITHUB} aria-label="Github"   >
+              <i className="fab fa-github fa-2x" aria-hidden="true"></i>
+            </a>
 
-          </ul>
-          <Grid container spacing={3}>
-            {/* Recent Deposits */}
-            <Grid item xs={12} md={4} lg={3}>
-              <Paper className={fixedHeightPaper}>
+            <a href={MEDIA_URLS.LINKEDIN} aria-label="Linkedin"   >
+              <i className="fab fa-linkedin fa-2x" aria-hidden="true"></i>
+            </a>
+            {/* <a target="_blank" href="https://www.instagram.com/uj00007/"
+              style="color: inherit;"><i className="fab fa-instagram"></i></a> */}
+            <a href={MEDIA_URLS.STACKOVERFLOW} aria-label="Stackoverflow"   >
+              <i className="fab fa-stack-overflow fa-2x" aria-hidden="true"></i>
+            </a>
 
-                <Deposits />
-              </Paper>
-            </Grid>
-          </Grid>
-          <Box pt={4}>
-            <Copyright />
-          </Box>
+            <a href={MEDIA_URLS.MEDIUM} aria-label="Medium"   >
+              <i className="fab fa-medium fa-2x" aria-hidden="true"></i>
+            </a>
+          </div>
+
+          <h1 >Yash Agrawal</h1>
         </Container>
-      </main>
-    </div>
+      </TabPanel>
+      <TabPanel value={value} index={1}>
+        Page Two
+      </TabPanel>
+      <TabPanel value={value} index={2}>
+        Page Three
+      </TabPanel>
+      <Box pt={4}>
+      </Box>
+    </div >
   );
 }
