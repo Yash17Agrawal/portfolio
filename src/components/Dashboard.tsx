@@ -11,6 +11,9 @@ import { MEDIA_URLS } from '../constants/common';
 import Tabs from '@material-ui/core/Tabs';
 import Tab from '@material-ui/core/Tab';
 import './dashboard.scss';
+import { Button, Link } from '@material-ui/core';
+import logo from '../assets/coming_soon.gif'
+import AboutMe from './AboutMe';
 var profilePic = require('../assets/profilephoto.JPG');
 
 interface TabPanelProps {
@@ -68,6 +71,7 @@ const drawerWidth = 240;
 const useStyles = makeStyles((theme) => ({
   root: {
     display: 'flex',
+    height: '89%'
   },
   toolbar: {
     paddingRight: 24, // keep right padding when drawer closed
@@ -141,11 +145,10 @@ export default function Dashboard() {
             variant="fullWidth"
             value={value}
             onChange={handleChange}
-            aria-label="nav tabs example"
-          >
-            <LinkTab label="Page One" href="/drafts" {...a11yProps(0)} />
-            <LinkTab label="Page Two" href="/trash" {...a11yProps(1)} />
-            <LinkTab label="Page Three" href="/spam" {...a11yProps(2)} />
+            aria-label="nav tabs example">
+            <LinkTab label="Profile" href="/drafts" {...a11yProps(0)} />
+            <LinkTab label="About Me" href="/trash" {...a11yProps(1)} />
+            <LinkTab label="Blog" {...a11yProps(2)} />
           </Tabs>
         </Toolbar>
       </AppBar>
@@ -153,6 +156,9 @@ export default function Dashboard() {
         <Container maxWidth="lg" className={`${classes.container} profile`}>
 
           <img src={profilePic}></img>
+          <Button variant="contained">
+            <a href={`src/assets/resume.pdf`} target='_blank' download="Resume">Resume</a>
+          </Button>
           <div className="external">
             <a href={MEDIA_URLS.TWITTER} aria-label="Twitter"   >
               <i className="fab fa-twitter fa-2x" aria-hidden="true"></i>
@@ -180,13 +186,17 @@ export default function Dashboard() {
         </Container>
       </TabPanel>
       <TabPanel value={value} index={1}>
-        Page Two
+        {/* <img src={logo}></img> */}
+        <AboutMe></AboutMe>
       </TabPanel>
       <TabPanel value={value} index={2}>
-        Page Three
+        <Container maxWidth="lg" className={`${classes.container}`}>
+          Original Page Coming Soon !!!!
+          <Link href="https://yash17blog.wordpress.com">Wordpress</Link>
+        </Container>
       </TabPanel>
       <Box pt={4}>
       </Box>
-    </div >
+    </div>
   );
 }
