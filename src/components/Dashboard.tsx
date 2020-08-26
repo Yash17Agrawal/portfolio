@@ -14,6 +14,12 @@ import './dashboard.scss';
 import { Button, Link } from '@material-ui/core';
 import logo from '../assets/coming_soon.gif'
 import AboutMe from './AboutMe';
+import AnimatedScreen from './AnimatedScreen/AnimatedScreen';
+import GetAppIcon from '@material-ui/icons/GetApp';
+import FacebookIcon from '@material-ui/icons/Facebook';
+import LinkedInIcon from '@material-ui/icons/LinkedIn';
+import TwitterIcon from '@material-ui/icons/Twitter';
+import GitHubIcon from '@material-ui/icons/GitHub';
 var profilePic = require('../assets/profilephoto.JPG');
 
 interface TabPanelProps {
@@ -130,7 +136,7 @@ const useStyles = makeStyles((theme) => ({
 
 export default function Dashboard() {
   const classes = useStyles();
-  const [value, setValue] = React.useState(0);
+  const [value, setValue] = React.useState(1);
 
   const handleChange = (event: React.ChangeEvent<{}>, newValue: number) => {
     setValue(newValue);
@@ -149,15 +155,17 @@ export default function Dashboard() {
             <LinkTab label="Profile" href="/drafts" {...a11yProps(0)} />
             <LinkTab label="About Me" href="/trash" {...a11yProps(1)} />
             <LinkTab label="Blog" {...a11yProps(2)} />
+            <LinkTab label="Research" {...a11yProps(2)} />
           </Tabs>
         </Toolbar>
       </AppBar>
       <TabPanel value={value} index={0}>
         <Container maxWidth="lg" className={`${classes.container} profile`}>
-
+          {/* <AnimatedScreen></AnimatedScreen> */}
           <img src={profilePic}></img>
-          <Button variant="contained">
-            <a href={`src/assets/resume.pdf`} target='_blank' download="Resume">Resume</a>
+          <Button variant="contained" startIcon={<GetAppIcon />}>
+
+            Download Resume
           </Button>
           <div className="external">
             <a href={MEDIA_URLS.TWITTER} aria-label="Twitter"   >

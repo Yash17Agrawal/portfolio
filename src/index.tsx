@@ -1,15 +1,25 @@
 import React from 'react';
 import ReactDOM from 'react-dom';
 import './index.css';
+import { BrowserRouter as Router, Route, Switch } from 'react-router-dom';
 import * as serviceWorker from './serviceWorker';
 import Dashboard from './components/Dashboard';
-import StickyFooter from './components/StickyFooter/StickyFooter';
+import withHeaderFooter from './components/WithHeaderFooter';
+import Books from './components/Books';
+
+const routes = (
+  <React.StrictMode>
+    <Router>
+      <Switch>
+        <Route exact path={'/books'} component={withHeaderFooter(Books)} />
+        <Route path={'/'} component={withHeaderFooter(Dashboard)} />
+      </Switch>
+    </Router>
+  </React.StrictMode>
+);
 
 ReactDOM.render(
-  <React.StrictMode>
-    <Dashboard />
-    <StickyFooter></StickyFooter>
-  </React.StrictMode>,
+  routes,
   document.getElementById('root')
 );
 
