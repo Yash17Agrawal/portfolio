@@ -8,8 +8,7 @@ export default function withHeaderFooter<T>(Component: React.ComponentType<T>) {
       return (
         <>
           <Component {...this.props as T} />
-          {console.log("ss")}
-          <StickyFooter></StickyFooter>
+          {/* <StickyFooter></StickyFooter> */}
         </>
       );
     }

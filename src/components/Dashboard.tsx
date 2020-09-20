@@ -11,21 +11,19 @@ import { MEDIA_URLS } from '../constants/common';
 import Tabs from '@material-ui/core/Tabs';
 import Tab from '@material-ui/core/Tab';
 import './dashboard.scss';
-import { Button, Link } from '@material-ui/core';
+import { Button, Link, IconButton } from '@material-ui/core';
 import logo from '../assets/coming_soon.gif'
 import AboutMe from './AboutMe';
+import background from '../assets/background.jpg';
 import AnimatedScreen from './AnimatedScreen/AnimatedScreen';
-import GetAppIcon from '@material-ui/icons/GetApp';
-import FacebookIcon from '@material-ui/icons/Facebook';
-import LinkedInIcon from '@material-ui/icons/LinkedIn';
-import TwitterIcon from '@material-ui/icons/Twitter';
-import GitHubIcon from '@material-ui/icons/GitHub';
-var profilePic = require('../assets/profilephoto.JPG');
+import YA from '../assets/YA.png';
+var profilePic = require('../assets/profilephoto.jpg');
 
 interface TabPanelProps {
   children?: React.ReactNode;
   index: any;
   value: any;
+  classes?: string
 }
 
 function TabPanel(props: TabPanelProps) {
@@ -42,7 +40,7 @@ function TabPanel(props: TabPanelProps) {
     >
       {value === index && (
         <Box p={3}>
-          <Typography>{children}</Typography>
+          <Typography className={`${props.classes}`}>{children}</Typography>
         </Box>
       )}
     </div>
@@ -77,7 +75,8 @@ const drawerWidth = 240;
 const useStyles = makeStyles((theme) => ({
   root: {
     display: 'flex',
-    height: '89%'
+    flexDirection: 'column',
+    height: '100%'
   },
   toolbar: {
     paddingRight: 24, // keep right padding when drawer closed
@@ -145,53 +144,32 @@ export default function Dashboard() {
   return (
     <div className={classes.root}>
       <CssBaseline />
-      <AppBar position="absolute" className={clsx(classes.appBar)}>
-        <Toolbar className={classes.toolbar}>
-          <Tabs
-            variant="fullWidth"
-            value={value}
-            onChange={handleChange}
-            aria-label="nav tabs example">
-            <LinkTab label="Profile" href="/drafts" {...a11yProps(0)} />
-            <LinkTab label="About Me" href="/trash" {...a11yProps(1)} />
-            <LinkTab label="Blog" {...a11yProps(2)} />
-            <LinkTab label="Research" {...a11yProps(2)} />
-          </Tabs>
-        </Toolbar>
-      </AppBar>
-      <TabPanel value={value} index={0}>
-        <Container maxWidth="lg" className={`${classes.container} profile`}>
-          {/* <AnimatedScreen></AnimatedScreen> */}
-          <img src={profilePic}></img>
-          <Button variant="contained" startIcon={<GetAppIcon />}>
-
-            Download Resume
-          </Button>
-          <div className="external">
-            <a href={MEDIA_URLS.TWITTER} aria-label="Twitter"   >
-              <i className="fab fa-twitter fa-2x" aria-hidden="true"></i>
-            </a>
-
-            <a href={MEDIA_URLS.GITHUB} aria-label="Github"   >
-              <i className="fab fa-github fa-2x" aria-hidden="true"></i>
-            </a>
-
-            <a href={MEDIA_URLS.LINKEDIN} aria-label="Linkedin"   >
-              <i className="fab fa-linkedin fa-2x" aria-hidden="true"></i>
-            </a>
-            {/* <a target="_blank" href="https://www.instagram.com/uj00007/"
-              style="color: inherit;"><i className="fab fa-instagram"></i></a> */}
-            <a href={MEDIA_URLS.STACKOVERFLOW} aria-label="Stackoverflow"   >
-              <i className="fab fa-stack-overflow fa-2x" aria-hidden="true"></i>
-            </a>
-
-            <a href={MEDIA_URLS.MEDIUM} aria-label="Medium"   >
-              <i className="fab fa-medium fa-2x" aria-hidden="true"></i>
-            </a>
-          </div>
-
-          <h1 >Yash Agrawal</h1>
-        </Container>
+      {/* <AppBar position="absolute" className={clsx(classes.appBar)}> */}
+      <Toolbar className={classes.toolbar}>
+        {/* <IconButton aria-label="home" src>
+            <YA />
+          </IconButton> */}
+        <Tabs
+          variant="fullWidth"
+          value={value}
+          onChange={handleChange}
+          aria-label="nav tabs example">
+          <LinkTab label="Profile" href="/drafts" {...a11yProps(0)} />
+          <LinkTab label="About Me" href="/trash" {...a11yProps(1)} />
+          <LinkTab label="Projects" {...a11yProps(2)} />
+        </Tabs>
+      </Toolbar>
+      {/* </AppBar> */}
+      <TabPanel value={value} index={0} classes="profile">
+        <Typography>
+          Hi, my name is
+           <h1>Yash Agrawal</h1>
+          <h2>I build things in softwares</h2>
+          <h3>I'm a software engineer from Jaypee Noida, Btech with experience of working for multple roles in various projects from scracth till production and have been part of enterprise application development as well </h3>
+          <Button variant="contained">
+            <a href="mailto:yash17agrawal@gmail.com">Get In Touch</a></Button>
+        </Typography>
+        <img src={background} className="dashboard-bg"></img>
       </TabPanel>
       <TabPanel value={value} index={1}>
         {/* <img src={logo}></img> */}
@@ -203,8 +181,6 @@ export default function Dashboard() {
           <Link href="https://yash17blog.wordpress.com">Wordpress</Link>
         </Container>
       </TabPanel>
-      <Box pt={4}>
-      </Box>
     </div>
   );
 }

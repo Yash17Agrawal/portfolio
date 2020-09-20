@@ -1,0 +1,21 @@
+.about-me {
+  display: flex;
+  .left {
+    width: 50%;
+    .stack {
+      width: 8% !important;
+      img {
+        width: 94%;
+      }
+    }
+  }
+
+  .right {
+    width: 50%;
+
+    .dp {
+      height: 50%;
+      object-fit: contain;
+    }
+  }
+}

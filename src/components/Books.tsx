@@ -46,16 +46,16 @@ const Books = () => {
   ];
 
   return <React.Fragment>
-    <AppBar position="absolute">
-      <Toolbar >
-        <IconButton href="/">
-          <HomeIcon color="secondary"></HomeIcon>
-        </IconButton>
-      </Toolbar>
-    </AppBar>
+    {/* <AppBar position="absolute"> */}
+    <Toolbar >
+      <IconButton href="/">
+        <HomeIcon color="secondary"></HomeIcon>
+      </IconButton>
+    </Toolbar>
+    {/* </AppBar> */}
     <Container className="books">
       <img src={booksImage}></img>
-
+      Books I have read
       <List component="nav" aria-label="main mailbox folders">
         {
           books.map((book, index) => {
